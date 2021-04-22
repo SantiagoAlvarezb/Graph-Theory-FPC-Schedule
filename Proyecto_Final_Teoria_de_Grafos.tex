@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+
+\renewcommand{\thesection}{\Roman{section}} 
+\renewcommand{\thesubsection}{\thesection-\Alph{subsection}}
+\usepackage{hyperref}
+\usepackage{sectsty}
+\usepackage{multicol}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts, amsmath, amssymb}
+\usepackage[none]{hyphenat}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[nottoc, notlot, notlof]{tocbibind}
+\usepackage{graphicx}
+\usepackage{apacite}
+\usepackage{xcolor}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[L]{\slshape{Proyecto Final Teoría de Grafos 2021-1}}
+\fancyfoot[C]{\thepage}
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\baselinestretch}{1.5}
+\allsectionsfont{\centering}
+
+
+\begin{document}
+    \begin{center}
+        \huge{\textbf{Optimización del torneo colombiano de fútbol mediante el coloreo de grafos}}\\[10pt]
+        \small{\textbf{Santiago Alvarez Barbosa y Nicolás Velandia Sanabria}}\\[10pt]
+        \small{\textbf{Universidad del Rosario, Matemáticas Aplicadas y Ciencias de la Computación}}\\[10pt]
+        \today\\
+        \rule{\textwidth}{0.5pt}
+            \begin{abstract}
+                \textcolor{red}{\textbf{\MakeUppercase{revisar ortografía y poner ciertas parte en modo matematico }}}\\
+                Repositorio Github: \url{https://github.com/SantiagoAlvarezb/Graph_Theory_Final_Project}
+            \end{abstract}
+        \rule{\textwidth}{0.5pt}
+    \end{center}
+
+    \begin{multicols}{2}
+    \setcounter{page}{1}
+
+        \section{Introducción}
+            La coloración de grafos considera la etiquetación de vértices o aristas de un grafo G con diferentes colores. 
+            Se colorea de tal manera que ningún par de vértices o par de aristas adyacentes tengan el mismo color.\\
+            Frecuentemente, la aplicación de coloración de grafos se ve en problemas involucrando horarios colegiales o 
+            universitarios, donde su finalidad es poder crear un horario óptimo donde se cumplen todas las restricciones consideradas. 
+            Teniendo esto en cuenta, se puede aplicar las técnicas de coloración de grafos en otros ámbitos similares. 
+            Un ejemplo de esto es dentro del ámbito deportivo, específicamente en torneos todos contra todos. La mayoría de las 
+            ligas deportivas del mundo se basan en estos torneos, que consisten en \textit{n} equipos, donde se requiere que cada equipo se 
+            enfrente a los demás m veces dentro de un número específico de rondas. Por lo tanto, podemos aplicar ciertas 
+            restricciones a ligas deportivas actuales, y con el uso de la coloración de grafos, obtener una solución óptima 
+            del horario deportivo. 
+
+        \section{Problema}
+            Nos enfocaremos en la liga profesional colombiana (FPC), el cual es un torneo todos contra todos sencillo 
+            (cada equipo juega contra el otro una vez), en la temporada 2021-1. Construiremos el grafo de tal forma que podamos 
+            usar algoritmos para encontrar el número cromático, que en nuestro caso es el número mínimo de rondas que el torneo necesita.
+            Adicional al problema de coloreo general, consideraremos ciertas restricciones reales que se pueden incorporar al grafo.\\[10pt]
+            Ejemplos de restricciones que podríamos implementar:
+
+            \begin{itemize}
+                \item Minimizar el número de cortes en el horario, es decir, minimizar el número de veces que un equipo juega local o de visitante consecutivamente
+                \item Evitar que ciertos partidos se jueguen en la misma fecha debido a que equipos pueden compartir estadio
+                \item Equipo que empieza de local debe terminar la temporada como visitante y viceversa
+            \item Ciertos equipos deben jugar en ciertas rondas. Un ejemplo de porque se aplica esta restricción es para incrementar los ingresos de televisión.
+            \end{itemize}
+   
+            \subsection{Objetivos}
+                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-A. Con el uso de la coloración 
+                de grafos y sus técnicas.\\[10pt]
+        
+                Objetivos específicos:
+                \begin{itemize}
+                    \item Encontrar una forma de representar las restricciones especificadas 
+                    \item Encontrar el número cromático de nuestro grafos con el uso de algoritmos 
+                \end{itemize}
+
+        \section{Marco Teórico}
+
+            \begin{itemize}
+                \item Grafo: Un grafo G es una terna que consiste en un conjunto de vértices V(G), un conjunto 
+                de aristas E(G) y una relación que asocia a cada arista con un par de vértices (extremos) 
+                no necesariamente distintos
+                \item Grafo Simple: G = (V,E) es un grafo sin bucles ni aristas múltiples, donde E es un conjunto 
+                de pares no ordenados de vértices
+                \item Número cromático: El número cromático X(G) es el mínimo número de colores necesarios 
+                para etiquetar los vértices de G de tal manera que vértices adyacentes reciben colores 
+                distintos
+                \item Subgrafo Inducido: Es un subgrafo que se obtiene al eliminar un conjunto de vértices. Se 
+                escribe G[T] para G-T’ donde T’ = V(G) - T, este es el grafo inducido por T                 
+            \end{itemize}
+        
+        \section{Modelamiento}
+            Como nos enfocaremos en la liga colombiana de fútbol en la temporada 2021-1, hay que 
+            tener en cuenta ciertos aspectos para la construcción de nuestro grafo
+            \begin{itemize}
+                \item  Hay 19 equipos
+                \item  Hay 17 estadios (2 pares de equipos comparten estadio)
+                \item  En el torneo actual hay 4 partidos denominados clásicos
+                \begin{itemize}
+                    \item  Millonarios vs. Santa Fe
+                    \item  Atlético Nacional vs. Deportivo Independiente Medellín
+                    \item America de Cali vs Deportivo Cali
+                    \item  Boyacá Chicó - Patriotas
+                \end{itemize}
+            \end{itemize}
+
+            Ya con esto en cuenta podemos implementar un grafo general G, el cual se usará para 
+            encontrar el número cromático, es decir, encontrar el mínimo número de fechas para la 
+            realización del torneo.\\
+            Para este grafo, los vértices serán etiquetados como un par ordenado {a,b} que indican un 
+            partido entre el equipo a y el equipo b, con a siendo local; Mientras que las aristas unen 
+            vértices que tienen equipos en común.Al finalizar el procesamiento del grafo G, nos enfocaremos en los grafos inducidos por el 
+            coloreo para así implementar las restricciones.\\[10pt]
+            Tendremos en cuenta restricciones fuertes (las cuales se debe cumplir) y restricciones 
+            suaves (las cuales se cumplirán en lo posible). Estas restricciones son restricciones que 
+            actualmente se usan en el FPC, adicionalmente, implementaremos algunas que equipos y 
+            dirigentes de clubes piden a la Dimayor para mejorar la liga. Ya implementadas las 
+            restricciones, volvemos a usar coloración de grafos para ver, dentro de las jornadas, como 
+            se puede organizar los juegos.\\[10pt]
+            Condiciones fuertes:
+            \begin{itemize}
+                \item Equipos que comparten estadios no pueden jugar en la misma jornada como locales
+                \item NO hay fechas de clásicos. Usualmente había una fecha predeterminada donde 
+                todos los clásicos se juegan. En este caso no se tendrá en cuenta
+            \end{itemize}
+            Condiciones suaves:
+            \begin{itemize}  
+                \item Minimizar fechas consecutivas donde un equipo juega como visitante o local 2 veces 
+                seguidas. Por lo tanto, tener en lo posible un torneo donde para cada equipo se tiene 
+                el formato Local-Visitante-Local-Visitante… etc.     
+            \end{itemize}
+
+        \section{Soluciones Propuestas}
+            Proponemos usar un algoritmo de coloreo para hallar el numero cromático (n), para 
+            posteriormente construir n grafos con sus respectivas restricciones, y de esta forma 
+            hallar el horario óptimo para la realización adecuada del torneo.\\
+            Adicionalmente agregaremos restricciones al grafo obtenido, y posteriormente aplicar un 
+            algoritmo de coloreo para hallar los equipos que juegan cada jornada y así llegar al 
+            horario óptimo para la realización del torneo.
+            
+        \bibliographystyle{apacite}
+        \bibliography{Referencias}
+
+    \end{multicols}
+\end{document}
