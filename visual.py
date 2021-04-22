@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import numpy as np
 
 G = nx.Graph()  # Inicializamos el grafo G
 
@@ -48,3 +49,7 @@ pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
+
+# Matriz de adyacencia del grafo G
+A = nx.to_numpy_matrix(G)
+print(A)
