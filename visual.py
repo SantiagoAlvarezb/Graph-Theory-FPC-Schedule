@@ -53,3 +53,7 @@ plt.show()
 # Matriz de adyacencia del grafo G
 A = nx.to_numpy_matrix(G)
 print(A)
+
+# algoritmo de coloreo greedy (de network x)
+color = nx.coloring.greedy_color(G, strategy="independent_set")
+print(color)
