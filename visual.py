@@ -59,6 +59,14 @@ color_map = []
 for i in color:
     color_map.append(color[i])
 
+chromatic_number = []
+for i in color_map:
+    if i not in chromatic_number:
+        chromatic_number.append(i)
+print(
+    "Número cromático: ", len(chromatic_number)
+)  # Se obtiene el minimo numero de colores para colorear el grafo SIN RESTRICCIONES
+
 fig = plt.figure(figsize=(40, 40))
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
