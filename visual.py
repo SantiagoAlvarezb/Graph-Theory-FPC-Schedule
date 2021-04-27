@@ -50,21 +50,15 @@ nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
 
-# Matriz de adyacencia del grafo G
-A = nx.to_numpy_matrix(G)
-print(A)
-
 # algoritmo de coloreo greedy (de network x)
 color = nx.coloring.greedy_color(G, strategy="independent_set")
 print(color)
 
 # Como colorear el grafo SIN RESTRICCIONES con la informacion del algoitmo usando anteriormente
 color_map = []
-for node in G:
-    if 1 in node:
-        color_map.append("blue")
-    else:
-        color_map.append("red")
+for i in color:
+    color_map.append(color[i])
+
 fig = plt.figure(figsize=(40, 40))
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
