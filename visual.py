@@ -39,6 +39,13 @@ def add_edges():
 
 
 node_list = creating_node_list(teams)
+# intercalar partidos para evitar que equipos tengan unicamente partidos como locales o como visitantes
+for i in node_list[::2]:
+    node_list.remove(i)
+    i = (i[1], i[0])
+    node_list.append(i)
+print(node_list)
+
 add_nodes(node_list)
 add_edges()
 print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
