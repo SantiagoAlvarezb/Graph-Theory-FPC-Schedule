@@ -44,37 +44,36 @@ for i in node_list[::2]:
     node_list.remove(i)
     i = (i[1], i[0])
     node_list.append(i)
-print(node_list)
 
 add_nodes(node_list)
 add_edges()
-print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+# print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
 
 # Para la visualización del grafo
 fig = plt.figure(figsize=(40, 40))
+plt.gca().set_title("Grafo no restringido 10 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
 
 # algoritmo de coloreo greedy (de network x)
-color = nx.coloring.greedy_color(G, strategy="independent_set")
-print(color)
+color = nx.coloring.greedy_color(G, strategy="largest_first")
 
 # Como colorear el grafo SIN RESTRICCIONES con la informacion del algoitmo usando anteriormente
 color_map = []
 for i in color:
     color_map.append(color[i])
 
+# Encontrar el número cromatico
 chromatic_number = []
 for i in color_map:
     if i not in chromatic_number:
         chromatic_number.append(i)
-print(
-    "Número cromático: ", len(chromatic_number)
-)  # Se obtiene el minimo numero de colores para colorear el grafo SIN RESTRICCIONES
+print("Número cromático: ", len(chromatic_number))
 
 fig = plt.figure(figsize=(40, 40))
+plt.gca().set_title("Grafo no restringido 10 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
