@@ -58,7 +58,7 @@ for i in node_list[::2]:
 
 add_nodes(node_list)
 add_edges()
-# print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
 
 # Para la visualización del grafo
 fig = plt.figure(figsize=(40, 40))
@@ -66,7 +66,7 @@ plt.gca().set_title("Grafo no restringido 10 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
 # algoritmo de coloreo greedy (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -90,23 +90,35 @@ nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
 
-# --------------------------------------------
+# -------------Restricciones---------------------
 
 # Primera restriccion: Equipos que comparten estadio no pueden jugar en la misma jornada como locales
 shared = []
-print(color)
+# Se crea lista con partidos donde los equipos locales son aquellos que comparten estadio (equipos: 0, 1, 2, 3)
 for i in G.nodes():
     if i[0] == 0 or i[0] == 1 or i[0] == 2 or i[0] == 3:
         shared.append(i)
-print(shared)
 
+# Agregamos aristas entre los partidos donde los equipos que comparten estadio juegan de local en las misma fechas
 for i in range(len(shared)):
     for j in range(i + 1, len(shared)):
-        if color[shared[i]] == color[shared[j]] and (
-            shared[i][0] == 0 and shared[j][0] == 1
+        if (
+            color[shared[i]] == color[shared[j]]
+            and (shared[i][0] == 0 and shared[j][0] == 1)
+        ) or (
+            color[shared[i]] == color[shared[j]]
+            and (shared[i][0] == 2 and shared[j][0] == 3)
         ):
-            print(shared[i], shared[j])
-        elif color[shared[i]] == color[shared[j]] and (
-            shared[i][0] == 2 and shared[j][0] == 3
-        ):
-            print(shared[i], shared[j])
+            G.add_edge(shared[i], shared[j])
+
+# -------------Fin de Restricciones---------------------
+print("------------")
+print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+
+# Para la visualización del grafo con la implementación de la primera restriccion
+fig = plt.figure(figsize=(40, 40))
+plt.gca().set_title("Grafo no restringido 10 equipos")
+pos = nx.circular_layout(G, scale=2)
+nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
+plt.axis("equal")
+plt.show()
