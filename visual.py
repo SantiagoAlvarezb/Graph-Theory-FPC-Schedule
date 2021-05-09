@@ -5,7 +5,7 @@ import numpy as np
 G = nx.Graph()  # Inicializamos el grafo G
 
 node_list = []  # Lista que contendrá los nodos del grafo
-teams = list(range(0, 6))  # Número de equipos que toman parte del torneo
+teams = list(range(0, 10))  # Número de equipos que toman parte del torneo
 # Los siguientes numeros representan los siguientes equipos
 # 0 = Santa Fe
 # 1 = Millonarios
@@ -58,7 +58,7 @@ for i in node_list[::2]:
 
 add_nodes(node_list)
 add_edges()
-print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+# print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
 
 # Para la visualización del grafo
 fig = plt.figure(figsize=(40, 40))
@@ -90,7 +90,7 @@ nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
 
-# -------------Restricciones---------------------
+# -------------Restriccion 1---------------------
 
 # Primera restriccion: Equipos que comparten estadio no pueden jugar en la misma jornada como locales
 shared = []
@@ -111,14 +111,37 @@ for i in range(len(shared)):
         ):
             G.add_edge(shared[i], shared[j])
 
-# -------------Fin de Restricciones---------------------
-print("------------")
-print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+# print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
 
-# Para la visualización del grafo con la implementación de la primera restriccion
+# Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo no restringido 10 equipos")
+plt.gca().set_title("Grafo restringido (una restricción) 10 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
+
+color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
+
+# Cmabiar los nodos de Grafo para el nuevo coloreo
+new_list_node = list(color_r1.keys())
+mapping = dict(zip(G.nodes, new_list_node))
+G = nx.relabel_nodes(G, mapping)
+
+color_map_r1 = []
+for i in color_r1:
+    color_map_r1.append(color_r1[i])
+
+chromatic_number_r1 = []
+for i in color_map_r1:
+    if i not in chromatic_number_r1:
+        chromatic_number_r1.append(i)
+print("Número cromático: ", len(chromatic_number_r1))
+
+fig = plt.figure(figsize=(40, 40))
+plt.gca().set_title("Grafo restringido (una restricción) 10 equipos coloreado")
+pos = nx.circular_layout(G, scale=2)
+nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
+plt.axis("equal")
+plt.show()
+# -------------Fin de Restriccion 1---------------------
