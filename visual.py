@@ -6,6 +6,17 @@ G = nx.Graph()  # Inicializamos el grafo G
 
 node_list = []  # Lista que contendrá los nodos del grafo
 teams = list(range(0, 10))  # Número de equipos que toman parte del torneo
+# Los siguientes numeros representan los siguientes equipos
+# 0 = Santa Fe
+# 1 = Millonarios
+# 2 = Atlético Nacional
+# 3 = Deportivo Independiente Medellín
+# 4 = Deportivo Cali
+# 5 = América de Cali
+# 6 = Boyacá Chicó
+# 7 = Patriotas
+# 8 = Junior
+# 9 = DESCANSO
 
 # Función que genera los nodos. Se generan de forma que cada equipo juego con el otro una sola voz
 def creating_node_list(teams):
