@@ -5,7 +5,7 @@ import numpy as np
 G = nx.Graph()  # Inicializamos el grafo G
 
 node_list = []  # Lista que contendrá los nodos del grafo
-teams = list(range(0, 10))  # Número de equipos que toman parte del torneo
+teams = list(range(0, 6))  # Número de equipos que toman parte del torneo
 # Los siguientes numeros representan los siguientes equipos
 # 0 = Santa Fe
 # 1 = Millonarios
@@ -66,7 +66,7 @@ plt.gca().set_title("Grafo no restringido 10 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 # algoritmo de coloreo greedy (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -89,3 +89,24 @@ pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
+
+# --------------------------------------------
+
+# Primera restriccion: Equipos que comparten estadio no pueden jugar en la misma jornada como locales
+shared = []
+print(color)
+for i in G.nodes():
+    if i[0] == 0 or i[0] == 1 or i[0] == 2 or i[0] == 3:
+        shared.append(i)
+print(shared)
+
+for i in range(len(shared)):
+    for j in range(i + 1, len(shared)):
+        if color[shared[i]] == color[shared[j]] and (
+            shared[i][0] == 0 and shared[j][0] == 1
+        ):
+            print(shared[i], shared[j])
+        elif color[shared[i]] == color[shared[j]] and (
+            shared[i][0] == 2 and shared[j][0] == 3
+        ):
+            print(shared[i], shared[j])
