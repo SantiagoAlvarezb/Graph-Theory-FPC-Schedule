@@ -115,7 +115,7 @@ for i in range(len(shared)):
 
 # Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo restringido (una restricción) 10 equipos")
+plt.gca().set_title("Grafo con restriccion 1 de 10 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
@@ -139,7 +139,7 @@ for i in color_map_r1:
 print("Número cromático: ", len(chromatic_number_r1))
 
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo restringido (una restricción) 10 equipos coloreado")
+plt.gca().set_title("Grafo con restriccion 1 de 10 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
