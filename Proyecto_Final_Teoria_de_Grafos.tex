@@ -45,14 +45,14 @@
     \setcounter{page}{1}
 
         \section{Introducción}
-            La coloración de grafos considera la etiquetación de vértices o aristas de un grafo G con diferentes colores. 
+            La coloración de grafos etiqueta los de vértices o aristas de un grafo G con diferentes colores. 
             Se colorea de tal manera que ningún par de vértices o par de aristas adyacentes tengan el mismo color.\\
-            Frecuentemente, la aplicación de coloración de grafos se ve en problemas involucrando horarios colegiales o 
+            Frecuentemente, la aplicación de coloración de grafos se ve en problemas de horarios colegiales o 
             universitarios, donde su finalidad es poder crear un horario óptimo donde se cumplen todas las restricciones consideradas. 
-            Teniendo esto en cuenta, se puede aplicar las técnicas de coloración de grafos en otros ámbitos similares. 
+            Teniendo esto en cuenta, podemos aplicar las técnicas de coloración de grafos en otros ámbitos similares. 
             Un ejemplo de esto es dentro del ámbito deportivo, específicamente en torneos todos contra todos. La mayoría de las 
             ligas deportivas del mundo se basan en estos torneos, que consisten en \textit{n} equipos, donde se requiere que cada equipo se 
-            enfrente a los demás m veces dentro de un número específico de rondas. Por lo tanto, podemos aplicar ciertas 
+            enfrente a los demás \textit{m} veces dentro de un número específico de rondas. Por lo tanto, podemos aplicar ciertas 
             restricciones a ligas deportivas actuales, y con el uso de la coloración de grafos, obtener una solución óptima 
             del horario deportivo. 
 
@@ -71,7 +71,7 @@
             \end{itemize}
    
             \subsection{Objetivos}
-                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-A. Con el uso de la coloración 
+                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-1. Con el uso de la coloración 
                 de grafos y sus técnicas.\\[10pt]
                 Objetivos específicos:
                 \begin{itemize}
@@ -89,23 +89,23 @@
                 de pares no ordenados de vértices.
                 \item Número cromático: El número cromático $\chi(G)$ es el mínimo número de colores necesarios 
                 para etiquetar los vértices de $G$ de tal manera que vértices adyacentes reciben colores 
-                distintos
+                distintos.
                 \item Subgrafo Inducido: Es un subgrafo que se obtiene al eliminar un conjunto de vértices. Se 
-                escribe $G[T]$ para $G-\bar{T}$ donde $\bar{T} = V(G) - T$, este es el grafo inducido por $T$                 
+                escribe $G[T]$ para $G-\bar{T}$ donde $\bar{T} = V(G) - T$, este es el grafo inducido por $T$.                 
             \end{itemize}
         
         \section{Modelamiento}
             Nos enfocaremos en la liga colombiana de fútbol en la temporada 2021-1 con ciertas especificaciones, por lo tanto hay que 
             tener en cuenta ciertos aspectos para la construcción de nuestro grafo:
             \begin{itemize}
-                \item  Usaremos 10 equipos. 9 equipos de la liga y 1 equipo que representa tener un descanso
-                \item  Hay 7 estadios (2 pares de equipos comparten estadio)
+                \item  Usaremos 10 equipos. 9 equipos de la liga y 1 equipo que representa tener un descanso.
+                \item  Hay 7 estadios (2 pares de equipos comparten estadio).
                 \item  En el torneo actual hay 4 partidos denominados clásicos:
                 \begin{itemize}
-                    \item  Millonarios vs. Santa Fe
-                    \item  Atlético Nacional vs. Deportivo Independiente Medellín
-                    \item America de Cali vs Deportivo Cali
-                    \item  Boyacá Chicó - Patriotas
+                    \item  Millonarios vs. Santa Fe.
+                    \item  Atlético Nacional vs. Deportivo Independiente Medellín.
+                    \item America de Cali vs. Deportivo Cali.
+                    \item  Boyacá Chicó vs. Patriotas.
                 \end{itemize}
             \end{itemize}
 
@@ -113,7 +113,7 @@
             encontrar el número cromático, es decir, encontrar el mínimo número de fechas para la 
             realización del torneo.\\
             Para este grafo, los vértices serán etiquetados como un par ordenado (\textit{a},\text{b}) que indican un 
-            partido entre el equipo \textit{a} y el equipo \textit{b}, con \textit{a} siendo local; Mientras que las aristas unen 
+            partido entre el equipo \textit{a} y el equipo \textit{b}, con \textit{a} siendo local; mientras que las aristas unen 
             vértices que tienen equipos en común. Al finalizar el procesamiento del grafo $G$, nos enfocaremos en la representación de las restricciones
             sobre el mismo.\\[10pt]
             Tendremos en cuenta restricciones fuertes (las cuales se debe cumplir) y restricciones 
@@ -136,11 +136,11 @@
 
         \section{Soluciones Propuestas}
             
-            Agregaremos las restricciones al grafo $G$ y posteriormente usar un algoritmo de coloreo para hallar el numero cromático $\chi(G)$, para 
+            Agregaremos las restricciones al grafo $G$ y posteriormente usar un algoritmo de coloración para hallar el numero cromático $\chi(G)$, para 
             posteriormente construir \textit{n} grafos con sus respectivas restricciones, y de esta forma 
             hallar el horario óptimo para la realización adecuada del torneo.\\
             Adicionalmente, con los \textit{n} grafos inducidos, volver aplicar el algoritmo de coloreo para organizar la fecha en difrentes
-            freanjas de tiempo.
+            franjas de tiempo.
             
         \bibliographystyle{apacite}
         \bibliography{Referencias}
