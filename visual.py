@@ -5,7 +5,7 @@ import numpy as np
 G = nx.Graph()  # Inicializamos el grafo G
 
 node_list = []  # Lista que contendrá los nodos del grafo
-teams = list(range(0, 10))  # Número de equipos que toman parte del torneo
+teams = list(range(0, 9))  # Número de equipos que toman parte del torneo
 # Los siguientes numeros representan los siguientes equipos
 # 0 = Santa Fe
 # 1 = Millonarios
@@ -16,7 +16,6 @@ teams = list(range(0, 10))  # Número de equipos que toman parte del torneo
 # 6 = Boyacá Chicó
 # 7 = Patriotas
 # 8 = Junior
-# 9 = DESCANSO
 
 # Función que genera los nodos. Se generan de forma que cada equipo juego con el otro una sola voz
 def creating_node_list(teams):
@@ -62,7 +61,7 @@ add_edges()
 
 # Para la visualización del grafo
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo no restringido 10 equipos")
+plt.gca().set_title("Grafo no restringido 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
@@ -84,7 +83,7 @@ for i in color_map:
 print("Número cromático: ", len(chromatic_number))
 
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo no restringido 10 equipos coloreado")
+plt.gca().set_title("Grafo no restringido 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
@@ -115,7 +114,7 @@ for i in range(len(shared)):
 
 # Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo con restriccion 1 de 10 equipos")
+plt.gca().set_title("Grafo con restriccion 1 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
@@ -123,7 +122,7 @@ plt.show()
 
 color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
 
-# Cmabiar los nodos de Grafo para el nuevo coloreo
+# Cambiar los nodos de Grafo para el nuevo coloreo. Se tuvo que reorganizar el orden de los nodos
 new_list_node = list(color_r1.keys())
 mapping = dict(zip(G.nodes, new_list_node))
 G = nx.relabel_nodes(G, mapping)
@@ -139,7 +138,7 @@ for i in color_map_r1:
 print("Número cromático: ", len(chromatic_number_r1))
 
 fig = plt.figure(figsize=(40, 40))
-plt.gca().set_title("Grafo con restriccion 1 de 10 equipos coloreado")
+plt.gca().set_title("Grafo con restriccion 1 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
