@@ -98,7 +98,7 @@
             Nos enfocaremos en la liga colombiana de fútbol en la temporada 2021-1 con ciertas especificaciones, por lo tanto hay que 
             tener en cuenta ciertos aspectos para la construcción de nuestro grafo:
             \begin{itemize}
-                \item  Usaremos 10 equipos. 9 equipos de la liga y 1 equipo que representa tener un descanso.
+                \item  Usaremos 9 equipos de la liga.
                 \item  Hay 7 estadios (2 pares de equipos comparten estadio).
                 \item  En el torneo actual hay 4 partidos denominados clásicos:
                 \begin{itemize}
@@ -136,11 +136,9 @@
 
         \section{Soluciones Propuestas}
             
-            Agregaremos las restricciones al grafo $G$ y posteriormente usar un algoritmo de coloración para hallar el numero cromático $\chi(G)$, para 
-            posteriormente construir \textit{n} grafos con sus respectivas restricciones, y de esta forma 
-            hallar el horario óptimo para la realización adecuada del torneo.\\
-            Adicionalmente, con los \textit{n} grafos inducidos, volver aplicar el algoritmo de coloreo para organizar la fecha en difrentes
-            franjas de tiempo.
+            Agregaremos las restricciones una por una al grafo $G$, y al finalizar usar un algoritmo de coloración para hallar el numero cromático $\chi(G)$ y el grafo
+            representativo de la liga. Posteriormente, se obtendran \textit{n} grafos inducidos del grafo $G$ y se aplicaran las subrestricciones. 
+           
             
         \bibliographystyle{apacite}
         \bibliography{Referencias}
