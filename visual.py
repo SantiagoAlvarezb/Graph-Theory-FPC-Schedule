@@ -60,7 +60,7 @@ add_edges()
 # print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
 
 # Para la visualización del grafo
-fig = plt.figure(figsize=(40, 40))
+fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo no restringido 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
@@ -83,15 +83,14 @@ for i in color_map:
         chromatic_number.append(i)
 print("Número de fechas: ", len(chromatic_number))
 
-fig = plt.figure(figsize=(40, 40))
+fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo no restringido 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 # -------------Restriccion 1---------------------
-
 # Primera restriccion: Equipos que comparten estadio no pueden jugar en la misma jornada como locales
 shared = []
 # Se crea lista con partidos donde los equipos locales son aquellos que comparten estadio (equipos: 0, 1, 2, 3) y se agregan aristas entre ellos
@@ -104,13 +103,14 @@ for i in range(len(shared)):
         G.add_edge(shared[i], shared[j])
 
 # Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
-fig = plt.figure(figsize=(40, 40))
+fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo con restriccion 1 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
+# Aplicar algoritmo de color para el nuevo grafos
 color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
 
 # Cambiar los nodos de Grafo para el nuevo coloreo. Se tuvo que reorganizar el orden de los nodos
@@ -131,10 +131,72 @@ print(
     len(chromatic_number_r1),
 )
 
-fig = plt.figure(figsize=(40, 40))
+fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo con restriccion 1 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 # -------------Fin de Restriccion 1---------------------
+
+# -------------Restriccion 2---------------------
+# Segunda restriccion: NO existe una fecha de clasicos
+clasicos = []
+# Se crea lista con los partidos denominados clásicos y agregar aristas entre ellas para que esten en fechas diferentes
+for i in G.nodes():
+    if (
+        (i[0] == 1 and i[1] == 0)
+        or (i[0] == 2 and i[1] == 3)
+        or (i[0] == 5 and i[1] == 4)
+        or (i[0] == 6 and i[1] == 7)
+    ):
+        clasicos.append(i)
+# print(clasicos)
+print(nx.info(G))
+for i in range(len(shared)):
+    for j in range(i + 1, len(shared)):
+        G.add_edge(shared[i], shared[j])
+print("------------")
+print(nx.info(G))
+
+# Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
+fig = plt.figure(figsize=(10, 10))
+plt.gca().set_title("Grafo con restriccion 2 de 9 equipos")
+pos = nx.circular_layout(G, scale=2)
+nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
+plt.axis("equal")
+# plt.show()
+
+# Aplicar algoritmo de color para el nuevo grafos
+color_r2 = nx.coloring.greedy_color(G, strategy="largest_first")
+
+# Cambiar los nodos de Grafo para el nuevo coloreo. Se tuvo que reorganizar el orden de los nodos
+new_list_node = list(color_r2.keys())
+mapping = dict(zip(G.nodes, new_list_node))
+G = nx.relabel_nodes(G, mapping)
+
+color_map_r2 = []
+for i in color_r2:
+    color_map_r2.append(color_r2[i])
+
+chromatic_number_r2 = []
+for i in color_map_r2:
+    if i not in chromatic_number_r2:
+        chromatic_number_r2.append(i)
+print(
+    "Número de fechas con la implementacion de la restricción #2: ",
+    len(chromatic_number_r2),
+)
+
+fig = plt.figure(figsize=(10, 10))
+plt.gca().set_title("Grafo con restriccion 2 de 9 equipos coloreado")
+pos = nx.circular_layout(G, scale=2)
+nx.draw(G, pos, node_color=color_map_r2, with_labels=1, node_size=200, font_size=6)
+plt.axis("equal")
+# plt.show()
+
+
+# -------------Fin de Restriccion 2---------------------
+
+# -------------Restriccion 3---------------------
+# -------------Fin de Restriccion 3---------------------
