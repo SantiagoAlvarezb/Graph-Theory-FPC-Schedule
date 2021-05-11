@@ -69,6 +69,7 @@ plt.show()
 
 # algoritmo de coloreo greedy (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
+# print(color)
 
 # Como colorear el grafo SIN RESTRICCIONES con la informacion del algoitmo usando anteriormente
 color_map = []
@@ -80,7 +81,7 @@ chromatic_number = []
 for i in color_map:
     if i not in chromatic_number:
         chromatic_number.append(i)
-print("Número cromático: ", len(chromatic_number))
+print("Número de fechas: ", len(chromatic_number))
 
 fig = plt.figure(figsize=(40, 40))
 plt.gca().set_title("Grafo no restringido 9 equipos coloreado")
@@ -93,24 +94,14 @@ plt.show()
 
 # Primera restriccion: Equipos que comparten estadio no pueden jugar en la misma jornada como locales
 shared = []
-# Se crea lista con partidos donde los equipos locales son aquellos que comparten estadio (equipos: 0, 1, 2, 3)
+# Se crea lista con partidos donde los equipos locales son aquellos que comparten estadio (equipos: 0, 1, 2, 3) y se agregan aristas entre ellos
 for i in G.nodes():
     if i[0] == 0 or i[0] == 1 or i[0] == 2 or i[0] == 3:
         shared.append(i)
 
-# Agregamos aristas entre los partidos donde los equipos que comparten estadio juegan de local en las misma fechas
 for i in range(len(shared)):
     for j in range(i + 1, len(shared)):
-        if (
-            color[shared[i]] == color[shared[j]]
-            and (shared[i][0] == 0 and shared[j][0] == 1)
-        ) or (
-            color[shared[i]] == color[shared[j]]
-            and (shared[i][0] == 2 and shared[j][0] == 3)
-        ):
-            G.add_edge(shared[i], shared[j])
-
-# print(nx.info(G))  # Informacion importante sobre el grafo se muestra en la terminal
+        G.add_edge(shared[i], shared[j])
 
 # Para la visualización del grafo con la implementación de la primera restriccion sin coloreo
 fig = plt.figure(figsize=(40, 40))
@@ -135,7 +126,10 @@ chromatic_number_r1 = []
 for i in color_map_r1:
     if i not in chromatic_number_r1:
         chromatic_number_r1.append(i)
-print("Número cromático: ", len(chromatic_number_r1))
+print(
+    "Número de fechas con la implementacion de la restricción #1: ",
+    len(chromatic_number_r1),
+)
 
 fig = plt.figure(figsize=(40, 40))
 plt.gca().set_title("Grafo con restriccion 1 de 9 equipos coloreado")
