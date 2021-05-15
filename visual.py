@@ -67,9 +67,8 @@ nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
 plt.show()
 
-# algoritmo de coloreo greedy (de network x)
+# algoritmo de coloreo greedy/voraz (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
-# print(color)
 
 # Como colorear el grafo SIN RESTRICCIONES con la informacion del algoitmo usando anteriormente
 color_map = []
@@ -121,10 +120,11 @@ plt.show()
 # Aplicar algoritmo de color para el nuevo grafos
 color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
 
-# Cambiar los nodos de Grafo para el nuevo coloreo. Se tuvo que reorganizar el orden de los nodos
-new_list_node = list(color_r1.keys())
-mapping = dict(zip(G.nodes, new_list_node))
-G = nx.relabel_nodes(G, mapping)
+sorted_dict = dict()
+sorted_list = list((i, color_r1.get(i)) for i in G.nodes)
+for i in sorted_list:
+    sorted_dict.setdefault(i[0], i[1])
+color_r1 = sorted_dict
 
 color_map_r1 = []
 for i in color_r1:
@@ -147,7 +147,7 @@ plt.axis("equal")
 plt.show()
 
 print("-----------PARA R1-----------")
-for i in range(len(teams)):
+for i in range(len(chromatic_number_r1)):
     for key, value in color_r1.items():
         if i == value:
             print(i, key)
@@ -183,10 +183,12 @@ plt.show()
 # Aplicar algoritmo de color para el nuevo grafos
 color_r2 = nx.coloring.greedy_color(G, strategy="largest_first")
 
-# Cambiar los nodos de Grafo para el nuevo coloreo. Se tuvo que reorganizar el orden de los nodos
-new_list_node_2 = list(color_r2.keys())
-mapping_2 = dict(zip(G.nodes, new_list_node_2))
-G = nx.relabel_nodes(G, mapping_2)
+sorted_dict_2 = dict()
+sorted_list_2 = list((i, color_r2.get(i)) for i in G.nodes)
+for i in sorted_list_2:
+    sorted_dict_2.setdefault(i[0], i[1])
+color_r2 = sorted_dict_2
+
 
 color_map_r2 = []
 for i in color_r2:
@@ -209,8 +211,8 @@ plt.axis("equal")
 plt.show()
 
 print("-----------Horario parcial con R1 y R2-----------")
-for i in range(len(teams)):
-    for key, value in color_r1.items():
+for i in range(len(chromatic_number_r2)):
+    for key, value in color_r2.items():
         if i == value:
             print(i, key)
     print("##")
