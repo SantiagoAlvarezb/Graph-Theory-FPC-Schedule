@@ -281,38 +281,54 @@ print("fechas", fechas)
 # base = fechas[0]
 # we are going to go through ALL the matchdays and compare with the our base
 # we are going to count the number of breaks that the two consecutive matchdays would have and the one with the minimum is the next one to be appended from fechas to horario (and deleted in fechas)
-commons = []
-for x in range(10):
-    base = 0
-    test = []
-    for i in horario[base]:
-        test.append(i[base])
-    print("test:", test)
-    test2 = []
-    for i in fechas[x]:
-        test2.append(i[1])
-    if len(fechas[x]) % 2 != 0:
-        test2.append(99)
-    elif len(fechas[x]) == 2:
-        test2.append(99)
-        test2.append(99)
-    else:
-        pass
-    print("test2:", test2)
+print("START OF THE WHILE LOOP!!!")
+base = 0
+rango = 10
+while len(horario) != 11:
+    commons = []
+    for x in range(rango):
+        test = []
+        for i in horario[base]:
+            test.append(i[0])
+        print("test:", test)
+        test2 = []
+        for i in fechas[x]:
+            test2.append(i[1])
+        if len(fechas[x]) % 2 != 0:
+            test2.append(99)
+        elif len(fechas[x]) == 2:
+            test2.append(99)
+            test2.append(99)
+        else:
+            pass
+        print("test2:", test2)
 
-    # how many numbers are there in both lists
-    same = len(set(test) & set(test2))
-    commons.append(same)
-    print("number of same numbers:", same)
-    print("------")
+        # how many numbers are there in both lists
+        same = len(set(test) & set(test2))
+        commons.append(same)
+        print("number of same numbers:", same)
+        print("------")
 
-print(commons)
-valor_max = max(commons)
-max_index = commons.index(valor_max)
-print(max_index)
+    print(commons)
+    valor_max = max(commons)
+    max_index = commons.index(valor_max)
+    print(max_index)
 
-print(horario[0])
-print("apparently the next fecha should be:", fechas[max_index])
+    print(horario[0])
+    print("apparently the next fecha should be:", fechas[max_index])
+    horario.append(fechas[max_index])
+    fechas.remove(fechas[max_index])
+    base += 1
+    print("base:", base)
+    print(horario)
+    print(horario[base])
+    rango -= 1
+print("done!!!!!!")
+
+count = 0
+for i in horario:
+    print(count, i)
+    count += 1
 
 
 # -------------Fin de Restriccion 3---------------------
