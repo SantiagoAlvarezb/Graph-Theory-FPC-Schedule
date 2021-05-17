@@ -57,14 +57,14 @@
             del horario deportivo. 
 
         \section{Problema}
-            Nos enfocaremos en la liga profesional colombiana (FPC), el cual es un torneo todos contra todos sencillo 
+            Nos enfocaremos en el Fútbol Profesional Colombiano (FPC), el cual es un torneo todos contra todos sencillo 
             (cada equipo juega contra el otro una vez), en la temporada 2021-1. Construiremos el grafo de tal forma que podamos 
             usar algoritmos para encontrar el número cromático, que en nuestro caso es el número mínimo de rondas que el torneo necesita.
             Adicional al problema de coloreo general, consideraremos ciertas restricciones reales que se pueden incorporar al grafo.\\[10pt]
             Ejemplos de restricciones que podríamos implementar:
 
             \begin{itemize}
-                \item Minimizar el número de cortes en el horario, es decir, minimizar el número de veces que un equipo juega local o de visitante consecutivamente.
+                \item Minimizar el número de \textit{cortes} en el horario, es decir, minimizar el número de veces que un equipo juega local o de visitante consecutivamente.
                 \item Evitar que ciertos partidos se jueguen en la misma fecha debido a que equipos pueden compartir estadio.
                 \item Equipo que empieza de local debe terminar la temporada como visitante y viceversa.
                 \item Ciertos equipos deben jugar en ciertas rondas. Un ejemplo de porque se aplica esta restricción es para incrementar los ingresos de televisión.
@@ -76,31 +76,45 @@
                 Objetivos específicos:
                 \begin{itemize}
                     \item Encontrar una forma de representar las restricciones especificadas dentro de nuestro grafo. 
-                    \item Encontrar el número cromático de nuestro grafos con el uso de algoritmos.
+                    \item Encontrar el número cromático de nuestro grafos con el uso de algoritmos de coloración.
+                    \item Encontrar un horario óptimo donde se cumplan las restricciones propuestas.
                 \end{itemize}
 
         \section{Marco Teórico}
 
             \begin{itemize}
-                \item Grafo: Un grafo $G$ es una terna que consiste en un conjunto de vértices $V(G)$, un conjunto 
+                \item \textbf{Grafo:} Un grafo $G$ es una terna que consiste en un conjunto de vértices $V(G)$, un conjunto 
                 de aristas $E(G)$ y una relación que asocia a cada arista con un par de vértices (extremos) 
                 no necesariamente distintos.
-                \item Grafo Simple: $G = (V,E)$ es un grafo sin bucles ni aristas múltiples, donde E es un conjunto 
+                \item \textbf{Grafo Simple:} $G = (V,E)$ es un grafo sin bucles ni aristas múltiples, donde E es un conjunto 
                 de pares no ordenados de vértices.
-                \item Número cromático: El número cromático $\chi(G)$ es el mínimo número de colores necesarios 
+                \item \textbf{Número cromático:} El número cromático $\chi(G)$ es el mínimo número de colores necesarios 
                 para etiquetar los vértices de $G$ de tal manera que vértices adyacentes reciben colores 
-                distintos.
-                \item Subgrafo Inducido: Es un subgrafo que se obtiene al eliminar un conjunto de vértices. Se 
-                escribe $G[T]$ para $G-\bar{T}$ donde $\bar{T} = V(G) - T$, este es el grafo inducido por $T$.                 
+                distintos.  
+                \item \textbf{Librerías:} Se usó el lenguaje Python para el desarrollo del proyecto, espesificamente se usaron dos librerias:
+                \begin{enumerate}
+                    \item \textit{NetworkX:} Librería de Python para el estudio de grafos y análisis de redes.
+                    \item \textit{Matplotlib:} Librería de Python para la generación de gráficas.
+                \end{enumerate}        
             \end{itemize}
         
         \section{Modelamiento}
-            Nos enfocaremos en la liga colombiana de fútbol en la temporada 2021-1 con ciertas especificaciones, por lo tanto hay que 
-            tener en cuenta ciertos aspectos para la construcción de nuestro grafo:
+            Enfocados en el FPC en la temporada 2021-1, aplicaremos ciertas especificaciones para el desarrollo del proyecto. A continuación se presentan dichos aspectos:
             \begin{itemize}
-                \item  Usaremos 9 equipos de la liga.
-                \item  Hay 7 estadios (2 pares de equipos comparten estadio).
-                \item  En el torneo actual hay 4 partidos denominados clásicos:
+                \item  Se usarán \textbf{9 equipos}, cada uno representado por un número:
+                \begin{itemize}
+                    \item Santa fe: \textit{0}
+                    \item Millonarios: \textit{1}
+                    \item Atlético Nacional: \textit{2}
+                    \item Deportivo Independiente Medellín: \textit{3}
+                    \item Deportivo Cali: \textit{4}
+                    \item América de Cali: \textit{5}
+                    \item Boyacá Chicó: \textit{6}
+                    \item Patriotas: \textit{7}
+                    \item Junior: \textit{8}
+                \end{itemize}  
+                \item  De estos 9 equipos, 4 comparten 2 estadios, lo que significa que en total hay \textbf{7 estadios}.
+                \item  Tendremos \textbf{4 clásicos}:
                 \begin{itemize}
                     \item  Millonarios vs. Santa Fe.
                     \item  Atlético Nacional vs. Deportivo Independiente Medellín.
@@ -109,51 +123,69 @@
                 \end{itemize}
             \end{itemize}
 
-            Ya con esto en cuenta podemos implementar un grafo general $G$, el cual se usará para 
-            encontrar el número cromático, es decir, encontrar el mínimo número de fechas para la 
-            realización del torneo.\\
-            Para este grafo, los vértices serán etiquetados como un par ordenado (\textit{a},\text{b}) que indican un 
+            Con esto en cuenta podemos implementar un grafo general $G$, el cual se usará para 
+            encontrar el número mínimo de rondas para la realización del torneo.\\
+            Para el grafo $G$, los vértices serán etiquetados con un par ordenado (\textit{a},\text{b}) que indican un 
             partido entre el equipo \textit{a} y el equipo \textit{b}, con \textit{a} siendo local; mientras que las aristas unen 
             vértices que tienen equipos en común. Al finalizar el procesamiento del grafo $G$, nos enfocaremos en la representación de las restricciones
             sobre el mismo.\\[10pt]
-            Tendremos en cuenta restricciones fuertes (las cuales se debe cumplir) y restricciones 
-            suaves (las cuales se cumplirán en lo posible). Estas restricciones 
-            actualmente se usan en el FPC, adicionalmente, implementaremos algunas que equipos y 
-            dirigentes de clubes piden a la Dimayor para mejorar la liga. Ya implementadas las 
-            restricciones, volvemos a usar coloración de grafos para ver, dentro de las jornadas, como 
-            se puede organizar los juegos.\\[10pt]
+            Tendremos en cuenta restricciones fuertes, que obligatoriamente se debe cumplir, y restricciones 
+            suaves, las cuales se cumplirán en lo posible.\\[10pt]
             Condiciones fuertes:
             \begin{itemize}
                 \item Equipos que comparten estadios no pueden jugar en la misma jornada como locales.
                 \item \textbf{NO} hay fechas de clásicos.
             \end{itemize}
-            Condiciones suaves:
+            Condición suaves:
             \begin{itemize}  
-                \item Minimizar fechas donde un equipo juega como visitante o local consecutivamente. 
-                Por lo tanto, tener en lo posible un torneo donde para cada equipo se tiene 
-                el formato Local-Visitante-Local-Visitante.     
+                \item Minimizar \textit{cortes}. Tener en lo posible un torneo donde cada equipo alterna entre jugar de local y visitante.     
             \end{itemize}
 
         \section{Solución Propuesta}
-            Agregaremos las restricciones una por una al grafo $G$, y al finalizar usar un algoritmo de coloración para hallar el numero cromático $\chi(G)$ y el grafo
-            representativo de la liga. Posteriormente, se obtendran \textit{n} grafos inducidos del grafo $G$ y se aplicaran las subrestricciones. 
+            Agregaremos las restricciones fuertes una por una al grafo $G$ para tener una representación parcial del horario e ir coloreando cada nuevo grafo con el uso de un algoritmo de coloración propio de \textit{Networkx} 
+            para hallar el numero cromático $\chi(G)$. Posteriormente, se implementará la restricción suave para obtener el horario final óptimo factible. 
         
         \section{Implementación de la Solución}
-            Para desarrollar el problema se tuvo que escoger los 9 equipos en los cuales nos queriamos enfocar. Estos se escogieron de tal
-            forma que se pueda implementar las restricciones. Es decir, escogimos los equipos que forman parte de los partidos clásicos y aquellos 
-            que comparten estadio. A continuación mostramos los equipos y el número que los respresenta en los grafos que se usarán más adelante:
-            \begin{itemize}
-                \item Santa fe: \textit{0}
-                \item Millonarios: \textit{1}
-                \item Atlético Nacional: \textit{2}
-                \item Deportivo Independiente Medellín: \textit{3}
-                \item Deportivo Cali: \textit{4}
-                \item América de Cali: \textit{5}
-                \item Boyacá Chicó: \textit{6}
-                \item Patriotas: \textit{7}
-                \item Junior: \textit{8}
-            \end{itemize}  
-            Con la informacion presentada anteriormente, se construyó el siguiente grafo...   
+            \textbf{Primer paso:}\\ 
+            Se creó el grafo $G$, que representa la liga de fúbol sin ninguna restricción. Como fue mencionado anteriormente, los vértices representan todos los posibles partidos
+            mientras que las aristas unen aquellos vértices que tienen equipos en común.
+            Adicionalmente, se ejecutó la función de coloreo al grafo para tener uno horario de la liga base.
+            \begin{figure}[H]
+                \begin{center}
+                    \includegraphics[width=2.5 in]{visualizacion_grafo_9_equipos_coloreo_square.png}  
+                \caption{Grafo $G$ no restringido coloreado}
+                \end{center}
+            \end{figure}
+            \textbf{Segundo paso:}\\
+            Se implementó la primera restricción fuerte.
+            Inicialmente se identificaron los equipos que comparten estadios, en nuestro caso son los equipos: \textit{0, 1, 2, 3}. 
+            Con esto en mente, se recorrió el grafo $G$ y se agregaron aristas entre vértices que contenian a uno de estos cuatro equipos como local,
+            de tal modo que no se puedan jugar estos partidos en la misma jornada. Al finalizar el proceso, volvemos a colorear el grafo $G$.
+            \begin{figure}[H]
+                \begin{center}
+                    \includegraphics[width=2.5 in]{visualizacion_grafo_9_equipos_coloreo_r1_square.png}  
+                \caption{Grafo $G$ coloreado implementando la primera restricción fuerte}
+                \end{center}
+            \end{figure}
+
+            \textbf{Tercer paso:}\\ 
+            Después siguió implementar la segunda restricción fuerte sobre el grafo $G$ obtenido en el paso previo.
+            El proceso fue similar al anterior ya que se identificaron los vértices que contienen los 
+            partidos denominados clásicos y después se agregaron aristas entre ellos. En la siguiente figura se aprecia el nuevo grafo $G$ coloreado.
+            \begin{figure}[H]
+                \begin{center}
+                    \includegraphics[width=2.5 in]{visualizacion_grafo_9_equipos_coloreo_r2_square.png}  
+                \caption{Grafo $G$ coloreado implementando las dos restricciones fuertes}
+                \end{center}
+            \end{figure}
+            \textbf{Cuarto paso:}
+            Teniendo un horario de la liga donde las dos restricciones fuertes estan activas, el último paso es definir un horario en el cual se minimice los \textit{cortes}.
+            Esto se llevó al cabo escogiendo una fecha base e identificando los equipos que jugaran de local dentro de esta fecha. Con esto en cuenta, comparamos 
+            la base con las demas fechas con el propósito de encontrar una donde los equipos que jugaron de local en la base, jugaran de visitante en la otra.
+            Si este no era el caso, se escogia la fecha en el cual la mayoría de equipos locales en la base jugaran de visitante. Esta metodología se usó hasta completar un horario.   
+            Cabe mencionar que esta metodologia no nos asegura la minimización de cortes para los equipos de forma individual, sino que minimiza los cortes de forma general para el horario
+            . 
+
 
 
 
