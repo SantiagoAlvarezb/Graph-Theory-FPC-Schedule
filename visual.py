@@ -65,7 +65,7 @@ plt.gca().set_title("Grafo no restringido 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
 # algoritmo de coloreo greedy/voraz (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -80,14 +80,13 @@ chromatic_number = []
 for i in color_map:
     if i not in chromatic_number:
         chromatic_number.append(i)
-print("Número de fechas: ", len(chromatic_number))
 
 fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo no restringido 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
 
 # -------------Restriccion 1---------------------
@@ -115,7 +114,7 @@ plt.gca().set_title("Grafo con restriccion 1 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
 # Aplicar algoritmo de color para el nuevo grafos
 color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -134,24 +133,23 @@ chromatic_number_r1 = []
 for i in color_map_r1:
     if i not in chromatic_number_r1:
         chromatic_number_r1.append(i)
-print(
-    "Número de fechas con la implementacion de la restricción #1: ",
-    len(chromatic_number_r1),
-)
 
 fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo con restriccion 1 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
-print("-----------PARA R1-----------")
+print("----------------------")
+print(
+    "A continuacion les presentamos el horario parcial obtenido con la implementación de R1"
+)
 for i in range(len(chromatic_number_r1)):
     print("Fecha:", i + 1)
     for key, value in color_r1.items():
         if i == value:
-            print(i, key)
+            print(key)
 print("----------------------")
 # -------------Fin de Restriccion 1---------------------
 
@@ -178,7 +176,7 @@ plt.gca().set_title("Grafo con restriccion 2 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
 # Aplicar algoritmo de color para el nuevo grafos
 color_r2 = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -198,19 +196,18 @@ chromatic_number_r2 = []
 for i in color_map_r2:
     if i not in chromatic_number_r2:
         chromatic_number_r2.append(i)
-print(
-    "Número de fechas con la implementacion de la restricción #2: ",
-    len(chromatic_number_r2),
-)
 
 fig = plt.figure(figsize=(10, 10))
 plt.gca().set_title("Grafo con restriccion 2 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r2, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-# plt.show()
+plt.show()
 
-print("-----------Horario parcial con R1 y R2-----------")
+print("----------------------")
+print(
+    "A continuacion les presentamos el horario parcial obtenido con la implementación de R1 y R2"
+)
 for i in range(len(chromatic_number_r2)):
     print("Fecha:", i + 1)
     for key, value in color_r2.items():
@@ -221,6 +218,7 @@ print("----------------------")
 
 # -------------Restriccion 3---------------------
 # Tercera restriccion: En lo posible tener una liga donde los equipos son L-V-L-V...
+# Se crea cada fecha como una lista y esta se inserta dentro de una lista llamada fechas (se vuelve una lista de listas)
 fechas = []
 f1 = []
 f2 = []
@@ -269,28 +267,31 @@ fechas.append(f8)
 fechas.append(f9)
 fechas.append(f10)
 fechas.append(f11)
-print(fechas)
 
-print("--------")
-# Choose out base matchday and append it to a new list which is hour leage timetable! also delete from fechas
-horario = []
-horario.append(fechas[0])  # fechas[0] AKA fecha 1 is our base
+# Se escoge la primera fecha como nuestra base (cabe mencionar que se podria escoger otras fechas como base)
+horario = (
+    []
+)  # se crea la lista horario, donde al finalizar se tendrá el horario final #
+
+# Agregamos nuestra fecha base a horario y la quitamos de fechas
+horario.append(fechas[0])
 fechas.remove(fechas[0])
-print("horario", horario)
-print("fechas", fechas)
-# base = fechas[0]
+
 # we are going to go through ALL the matchdays and compare with the our base
 # we are going to count the number of breaks that the two consecutive matchdays would have and the one with the minimum is the next one to be appended from fechas to horario (and deleted in fechas)
-print("START OF THE WHILE LOOP!!!")
+
+# En esta sección del codigo se comparamos la ultima fecha agregada a la lista horario con cada una de las fechas en la lista fechas
+# Se cuentan el numero de equipos que juegan de local la ultima fecha agregada a lista y que juegan de visitante en las fechas de la lista fechas
+# Se escoge la fecha con el numero maximo y se agrega a horario y se elimina de fechas
+# Se vuelve y se repite el proceso hasta que la lista horario este llena
 base = 0
 rango = 10
 while len(horario) != 11:
-    commons = []
+    comunes = []
     for x in range(rango):
         test = []
         for i in horario[base]:
             test.append(i[0])
-        print("test:", test)
         test2 = []
         for i in fechas[x]:
             test2.append(i[1])
@@ -301,34 +302,29 @@ while len(horario) != 11:
             test2.append(99)
         else:
             pass
-        print("test2:", test2)
+        # encontramos el numero de equipos que juegan de local una fecha y la proxima jugarian de visitante
+        mismos = len(set(test) & set(test2))
+        comunes.append(mismos)
 
-        # how many numbers are there in both lists
-        same = len(set(test) & set(test2))
-        commons.append(same)
-        print("number of same numbers:", same)
-        print("------")
+    # se encuentra la fecha con numero maximo
+    valor_max = max(comunes)
+    max_index = comunes.index(valor_max)
 
-    print(commons)
-    valor_max = max(commons)
-    max_index = commons.index(valor_max)
-    print(max_index)
-
-    print(horario[0])
-    print("apparently the next fecha should be:", fechas[max_index])
+    # Se agrega esta fecha encontrada a horarios y se quita de fechas
     horario.append(fechas[max_index])
     fechas.remove(fechas[max_index])
     base += 1
-    print("base:", base)
-    print(horario)
-    print(horario[base])
     rango -= 1
-print("done!!!!!!")
-
-count = 0
-for i in horario:
-    print(count, i)
-    count += 1
-
 
 # -------------Fin de Restriccion 3---------------------
+print("----------------------")
+print(
+    "A continuacion les presentamos el horario final obtenido con la implementación de las 3 restricciones"
+)
+count = 0
+for i in horario:
+    print("Fecha:", count + 1)
+    for j in i:
+        print(j)
+    count += 1
+print("----------------------")
