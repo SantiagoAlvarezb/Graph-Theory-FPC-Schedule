@@ -281,22 +281,38 @@ print("fechas", fechas)
 # base = fechas[0]
 # we are going to go through ALL the matchdays and compare with the our base
 # we are going to count the number of breaks that the two consecutive matchdays would have and the one with the minimum is the next one to be appended from fechas to horario (and deleted in fechas)
-test = []
-for i in horario[0]:
-    test.append(i[0])
-print("test:", test)
-test2 = []
-for i in fechas[0]:
-    test2.append(i[1])
-if len(fechas[0]) % 2 != 0:
-    test2.append(0)
-else:
-    pass
-print("test2:", test2)
+commons = []
+for x in range(10):
+    base = 0
+    test = []
+    for i in horario[base]:
+        test.append(i[base])
+    print("test:", test)
+    test2 = []
+    for i in fechas[x]:
+        test2.append(i[1])
+    if len(fechas[x]) % 2 != 0:
+        test2.append(99)
+    elif len(fechas[x]) == 2:
+        test2.append(99)
+        test2.append(99)
+    else:
+        pass
+    print("test2:", test2)
 
-# how many numbers are there in both lists
-common = len(set(test) & set(test2))
-print("number of same numbers:", common)
+    # how many numbers are there in both lists
+    same = len(set(test) & set(test2))
+    commons.append(same)
+    print("number of same numbers:", same)
+    print("------")
+
+print(commons)
+valor_max = max(commons)
+max_index = commons.index(valor_max)
+print(max_index)
+
+print(horario[0])
+print("apparently the next fecha should be:", fechas[max_index])
 
 
 # -------------Fin de Restriccion 3---------------------
