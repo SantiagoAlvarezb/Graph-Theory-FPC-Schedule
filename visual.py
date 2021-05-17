@@ -65,7 +65,7 @@ plt.gca().set_title("Grafo no restringido 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 # algoritmo de coloreo greedy/voraz (de network x)
 color = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -87,7 +87,7 @@ plt.gca().set_title("Grafo no restringido 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 
 # -------------Restriccion 1---------------------
@@ -115,7 +115,7 @@ plt.gca().set_title("Grafo con restriccion 1 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 # Aplicar algoritmo de color para el nuevo grafos
 color_r1 = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -144,14 +144,14 @@ plt.gca().set_title("Grafo con restriccion 1 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r1, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 print("-----------PARA R1-----------")
 for i in range(len(chromatic_number_r1)):
+    print("Fecha:", i + 1)
     for key, value in color_r1.items():
         if i == value:
             print(i, key)
-    print("##")
 print("----------------------")
 # -------------Fin de Restriccion 1---------------------
 
@@ -178,7 +178,7 @@ plt.gca().set_title("Grafo con restriccion 2 de 9 equipos")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 # Aplicar algoritmo de color para el nuevo grafos
 color_r2 = nx.coloring.greedy_color(G, strategy="largest_first")
@@ -208,19 +208,95 @@ plt.gca().set_title("Grafo con restriccion 2 de 9 equipos coloreado")
 pos = nx.circular_layout(G, scale=2)
 nx.draw(G, pos, node_color=color_map_r2, with_labels=1, node_size=200, font_size=6)
 plt.axis("equal")
-plt.show()
+# plt.show()
 
 print("-----------Horario parcial con R1 y R2-----------")
 for i in range(len(chromatic_number_r2)):
+    print("Fecha:", i + 1)
     for key, value in color_r2.items():
         if i == value:
             print(i, key)
-    print("##")
 print("----------------------")
-
 # -------------Fin de Restriccion 2---------------------
-# print("----------------------")
+
 # -------------Restriccion 3---------------------
 # Tercera restriccion: En lo posible tener una liga donde los equipos son L-V-L-V...
+fechas = []
+f1 = []
+f2 = []
+f3 = []
+f4 = []
+f5 = []
+f6 = []
+f7 = []
+f8 = []
+f9 = []
+f10 = []
+f11 = []
+for i in range(len(chromatic_number_r2)):
+    for key, value in color_r2.items():
+        if i == value:
+            if value == 0:
+                f1.append(key)
+            if value == 1:
+                f2.append(key)
+            if value == 2:
+                f3.append(key)
+            if value == 3:
+                f4.append(key)
+            if value == 4:
+                f5.append(key)
+            if value == 5:
+                f6.append(key)
+            if value == 6:
+                f7.append(key)
+            if value == 7:
+                f8.append(key)
+            if value == 8:
+                f9.append(key)
+            if value == 9:
+                f10.append(key)
+            if value == 10:
+                f11.append(key)
+fechas.append(f1)
+fechas.append(f2)
+fechas.append(f3)
+fechas.append(f4)
+fechas.append(f5)
+fechas.append(f6)
+fechas.append(f7)
+fechas.append(f8)
+fechas.append(f9)
+fechas.append(f10)
+fechas.append(f11)
+print(fechas)
+
+print("--------")
+# Choose out base matchday and append it to a new list which is hour leage timetable! also delete from fechas
+horario = []
+horario.append(fechas[0])  # fechas[0] AKA fecha 1 is our base
+fechas.remove(fechas[0])
+print("horario", horario)
+print("fechas", fechas)
+# base = fechas[0]
+# we are going to go through ALL the matchdays and compare with the our base
+# we are going to count the number of breaks that the two consecutive matchdays would have and the one with the minimum is the next one to be appended from fechas to horario (and deleted in fechas)
+test = []
+for i in horario[0]:
+    test.append(i[0])
+print("test:", test)
+test2 = []
+for i in fechas[0]:
+    test2.append(i[1])
+if len(fechas[0]) % 2 != 0:
+    test2.append(0)
+else:
+    pass
+print("test2:", test2)
+
+# how many numbers are there in both lists
+common = len(set(test) & set(test2))
+print("number of same numbers:", common)
+
 
 # -------------Fin de Restriccion 3---------------------
