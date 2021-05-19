@@ -187,29 +187,243 @@
             Cabe mencionar que esta metodologia no nos asegura la minimización de cortes para los equipos de forma individual, sino que minimiza los cortes de forma general para el horario. 
 
         \section{Resultados Obtenidos}
-            A continuación se muestran los resultados obtenidos al realizar este análisis específico a la Liga Profesional Colombiana de Fútbol.   
+            Habiendo adquirido las representacion de la Liga Profesional de Fútbol Colombiano con el uso de grafos conteniendo las restricciones fuertes y haciendo el análisis de la 
+            restricción suave para obtener un horario factible y óptimo, se obtuvieron los siguientes resultados.
+            \begin{itemize}
+                \item Número de fechas: 11
+                \item Partidos por cada equipo: 8
+                \item Fechas de descanso por cada equipo:3
+                \item Número maximo de fechas consecutivas jugando como local: 3
+                \item Número maximo de fechas consecutivas jugando como visitante: 2
+            \end{itemize}
+
+            En la figura 4, se muestra el formato local-visitante del horario mientras que la información general con respecto a los \textit{cortes} se encuentra mejor resumida por equipo en la tabla 1.
             \begin{figure}[H]
                 \begin{center}
                     \includegraphics[width=3.0 in]{cortes.png}  
-                \caption{Visualización del formato Local - Visitante del horario}
+                \caption{Visualización del formato Local-Visitante}
                 \end{center}
             \end{figure}
-            \textbf{HABLAR SOBORE FIGURA DE ARRIBA}\\
-            Como se puede ver 
-            \begin{figure}[H]
-                \begin{center}
-                    \includegraphics[width=1.5 in]{cortes_especificos.png}  
-                \caption{Número de \textit{cortes} por equipo}
-                \end{center}
-            \end{figure}
-            \textbf{HABLAR SOBORE FIGURA DE ARRIBA}\\
-            La figura 5 nos muestra 
+           
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|c|c|}
+                    \hline
+                    Equipos & \textit{Cortes} & Locales & Visitantes\\ \hline
+                    0 & 1 & 0 & 1\\ \hline
+                    1 & 0 & 0 & 0\\ \hline
+                    2 & 0 & 0 & 0\\ \hline
+                    3 & 1 & 1 & 0\\ \hline
+                    4 & 2 & 1 & 1\\ \hline
+                    5 & 3 & 2 & 1\\ \hline
+                    6 & 2 & 1 & 1\\ \hline
+                    7 & 2 & 1 & 1\\ \hline
+                    8 & 2 & 1 & 1\\ \hline
+                \end{tabular} 
+                \caption{Información de \textit{cortes} por equipos}
+            \end{table}
+            
+            Por otro lado, las figuras 6-14 presentan el horario de cada equipo.\\
+            Con la fecha y consecuentemente el equipo al cual se enfrentará.
+            
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 &  \\ \hline
+                    2 & Atlético Nacional \\ \hline
+                    3 & América de Cali \\ \hline
+                    4 & Junior \\ \hline
+                    5 & Millonarios \\ \hline
+                    6 & Deportivo Cali \\ \hline
+                    7 & Patriotas \\ \hline
+                    8 &  \\ \hline
+                    9 & Deportivo Independiente Medellín \\ \hline
+                    10 & Boyacá Chicó \\ \hline
+                    11 &  \\ \hline
+                \end{tabular} 
+                \caption{Horario de Santa Fe}
+            \end{table}
 
-            Las siguientes figuras presentan el horario de cada equipo que perteneca a la liga.  
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Deportivo Independiente Medellín \\ \hline
+                    2 & Boyacá Chicó \\ \hline
+                    3 & Patriotas \\ \hline
+                    4 & Deportivo Cali \\ \hline
+                    5 & Santa Fe \\ \hline
+                    6 & Atlético Nacional \\ \hline
+                    7 &  \\ \hline
+                    8 & América de Cali \\ \hline
+                    9 & Junior \\ \hline
+                    10 &  \\ \hline
+                    11 &  \\ \hline
+                \end{tabular} 
+                \caption{Horario de Millonarios}
+            \end{table}
 
-        
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & América de Cali \\ \hline
+                    2 & Santa Fe \\ \hline
+                    3 & Deportivo Independiente Medellín \\ \hline
+                    4 &  \\ \hline
+                    5 & Deportivo Cali \\ \hline
+                    6 & Millonarios \\ \hline
+                    7 & Junior \\ \hline
+                    8 & Patriotas \\ \hline
+                    9 & Boyacá Chicó\\ \hline
+                    10 &  \\ \hline
+                    11 &  \\ \hline
+                \end{tabular} 
+                \caption{Horario de Atlético Nacional}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Millonarios \\ \hline
+                    2 & Deportivo Cali \\ \hline
+                    3 & Atlético Nacional \\ \hline
+                    4 & Boyacá Chicó \\ \hline
+                    5 & América de Cali \\ \hline
+                    6 & \textcolor{white}{Deportivo Independiente Medellín} \\ \hline
+                    7 &  \\ \hline
+                    8 &  \\ \hline
+                    9 & Santa Fe\\ \hline
+                    10 & Junior \\ \hline
+                    11 & Patriotas \\ \hline
+                \end{tabular} 
+                \caption{Horario de Deportivo Independiente Medellín}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Junior \\ \hline
+                    2 & Deportivo Independiente Medellín \\ \hline
+                    3 &  \\ \hline
+                    4 & Millonarios \\ \hline
+                    5 & Atlético Nacional \\ \hline
+                    6 & Santa Fe \\ \hline
+                    7 &  \\ \hline
+                    8 & Boyacá Chicó \\ \hline
+                    9 & Patriotas\\ \hline
+                    10 & América de Cali \\ \hline
+                    11 &  \\ \hline
+                \end{tabular} 
+                \caption{Horario de Deportivo Cali}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Atlético Nacional\\ \hline
+                    2 &  \\ \hline
+                    3 & Santa Fe \\ \hline
+                    4 &  \\ \hline
+                    5 & Deportivo Independiente Medellín \\ \hline
+                    6 & Patriotas \\ \hline
+                    7 & Boyacá Chicó \\ \hline
+                    8 & Millonarios\\ \hline
+                    9 & \\ \hline
+                    10 & Deportivo Cali \\ \hline
+                    11 & Junior \\ \hline
+                \end{tabular} 
+                \caption{Horario de América de Cali}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Patriotas\\ \hline
+                    2 & Millonarios \\ \hline
+                    3 & Junior \\ \hline
+                    4 & Deportivo Independiente Medellín \\ \hline
+                    5 &  \\ \hline
+                    6 &  \\ \hline
+                    7 & América de Cali \\ \hline
+                    8 & Deportivo Cali\\ \hline
+                    9 & Atlético Nacional \\ \hline
+                    10 & Santa Fe \\ \hline
+                    11 &  \\ \hline
+                \end{tabular} 
+                \caption{Horario de Boyacá Chicó}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Boyacá Chicó\\ \hline
+                    2 & Junior \\ \hline
+                    3 & Millonarios \\ \hline
+                    4 &  \\ \hline
+                    5 &  \\ \hline
+                    6 & América de Cali \\ \hline
+                    7 & Santa Fe \\ \hline
+                    8 & Atlético Nacional\\ \hline
+                    9 & Deportivo Cali \\ \hline
+                    10 &  \\ \hline
+                    11 & Deportivo Independiente Medellín \\ \hline
+                \end{tabular} 
+                \caption{Horario de Patriotas}
+            \end{table}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|}
+                    \hline
+                    Fecha & Equipo\\ \hline
+                    1 & Deportivo Cali\\ \hline
+                    2 & Patriotas \\ \hline
+                    3 & Boyacá Chicó \\ \hline
+                    4 & Santa Fe \\ \hline
+                    5 &  \\ \hline
+                    6 &  \\ \hline
+                    7 & Atlético Nacional \\ \hline
+                    8 & \\ \hline
+                    9 & Millonarios \\ \hline
+                    10 & Deportivo Independiente Medellín \\ \hline
+                    11 & América de Cali \\ \hline
+                \end{tabular} 
+                \caption{Horario de Junior}
+            \end{table}
+                    
             \section{Conclusión}
-            En conclusión
+            Con la implementación de ciertos conceptos de Teoría de Grafos, restricciones fuertes y restricciones suaves, se logró generar un horario para la Liga Profesional Colombiana de Fútbol para 9 equipos 
+            que es factible y óptimo en el sentido de minimizar el número de \textit{cortes} en el horario.
+            
+            Adicionalmente, se pueden derivar 2 conclusiones claves:
+            \begin{enumerate}
+                \item En comparación con un torneo todos contra todos sencillo de \textit{n} equipos sin restricciones, el número de fechas para completarlo es \textit{n - 1} si \textit{n} es par y \textit{n} si \textit{n} es impar (donde cada equipo tiene una fecha de descanso).
+                En nuestro caso, sin restricciones necesitariamos \textit{9} fechas, sin embargo, obtuvimos que se necesitan \textit{11} fechas. Es decir \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de fechas en total y número de fechas de descanso por equipo}.
+                Teniendo en cuenta el punto de vista de la Dimayor organización (entidad encargada de administrar y reglamentar los torneos de fútbol profesional en Colombia), 
+                esto se puede ver como un aspecto negativo ya que se requiere hacer el torneo con el mínimo número de fechas posibles y sin tantas fechas de descanso.
+                \item Adicionalmente, en un torneo sencillos sin restricciones el mínimo número de \textit{cortes} es \textit{n - 2} si \textit{n} es par y \textit{0} si \textit{n} es impar. \textcolor{red}{\textbf{CITE WERRA}} 
+                En los resultados obtuvimos que los \textit{cortes} por equipo varian entre 0 y 3, lo que significa que \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de \textit{cortes} por equipo}.
+                Esto obviamente es un aspecto negativo del horario generado debido a que crea una desventaja entre los equipos de la liga.             
+            \end{enumerate}
+            
+            Esto significa que la implementación de restricciones a un torneo todos contra todos sencillos cambia ciertos aspectos que son considerados importantes tanto a las directivas como a los equipos que forman la liga.
+            Aunque la Teoría de Grafos es útil al solucionar este tipo de problemas, y efectivamente genera una solución para problemas relativamente pequeños, es mejor usar otras herramientas con más poder computacional de 
+            tal forma que se pueda generar horarios para ligas con más equipos y poder abordar todas las restricciones necesarias.  
             
         \bibliographystyle{apacite}
         \bibliography{Referencias}
