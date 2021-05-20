@@ -13,8 +13,8 @@ teams = list(range(0, 9))  # Número de equipos que toman parte del torneo
 # 3 = Deportivo Independiente Medellín
 # 4 = Deportivo Cali
 # 5 = América de Cali
-# 6 = Boyacá Chicó
-# 7 = Patriotas
+# 6 = Deportes Tolima
+# 7 = Atlético Huila
 # 8 = Junior
 
 # Función que genera los nodos. Se generan de forma que cada equipo juego con el otro una sola voz
