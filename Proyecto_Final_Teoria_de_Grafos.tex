@@ -21,7 +21,7 @@
 \pagestyle{fancy}
 \fancyhead{}
 \fancyfoot{}
-\fancyhead[L]{\slshape{Proyecto Final Teoría de Grafos 2021-1}}
+\fancyhead[L]{\slshape{Proyecto Final Teoría de Grafos 2021-2}}
 \fancyfoot[C]{\thepage}
 %\renewcommand{\headrulewidth}{0pt}
 %\renewcommand{\baselinestretch}{1.5}
@@ -59,7 +59,7 @@
 
         \section{Problema}
             Nos enfocaremos en el Fútbol Profesional Colombiano (FPC), el cual es un torneo todos contra todos sencillo 
-            (cada equipo juega contra el otro una vez), en la temporada 2021-1. Construiremos el grafo de tal forma que podamos 
+            (cada equipo juega contra el otro una vez), en la temporada 2021-2. Construiremos el grafo de tal forma que podamos 
             usar algoritmos para encontrar el número cromático, que en nuestro caso es el número mínimo de rondas que el torneo necesita.
             Adicional al problema de coloreo general, consideraremos ciertas restricciones reales que se pueden incorporar al grafo.\\[10pt]
             Ejemplos de restricciones que podríamos implementar:
@@ -72,7 +72,7 @@
             \end{itemize}
    
             \subsection{Objetivos}
-                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-1. Con el uso de la coloración 
+                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-2. Con el uso de la coloración 
                 de grafos y sus técnicas.\\[10pt]
                 Objetivos específicos:
                 \begin{itemize}
@@ -100,7 +100,7 @@
             \end{itemize}
         
         \section{Modelamiento}
-            Enfocados en el FPC en la temporada 2021-1, aplicaremos ciertas especificaciones para el desarrollo del proyecto. A continuación se presentan dichos aspectos:
+            Enfocados en el FPC en la temporada 2021-2, aplicaremos ciertas especificaciones para el desarrollo del proyecto. A continuación se presentan dichos aspectos:
             \begin{itemize}
                 \item  Se usarán \textbf{9 equipos}, cada uno representado por un número:
                 \begin{itemize}[label=$\diamond$]
@@ -110,8 +110,8 @@
                     \item Deportivo Independiente Medellín: \textit{3}
                     \item Deportivo Cali: \textit{4}
                     \item América de Cali: \textit{5}
-                    \item Boyacá Chicó: \textit{6}
-                    \item Patriotas: \textit{7}
+                    \item Deportes Tolima: \textit{6}
+                    \item Atlético Huila: \textit{7}
                     \item Junior: \textit{8}
                 \end{itemize}  
                 \item  De estos 9 equipos, 4 comparten 2 estadios, lo que significa que en total hay \textbf{7 estadios}.
@@ -120,7 +120,7 @@
                     \item  Millonarios vs. Santa Fe.
                     \item  Atlético Nacional vs. Deportivo Independiente Medellín.
                     \item  América de Cali vs. Deportivo Cali.
-                    \item  Boyacá Chicó vs. Patriotas.
+                    \item  Deportes Tolima  vs. Atlético Huila.
                 \end{enumerate}
             \end{itemize}
 
@@ -237,10 +237,10 @@
                     4 & Junior \\ \hline
                     5 & Millonarios \\ \hline
                     6 & Deportivo Cali \\ \hline
-                    7 & Patriotas \\ \hline
+                    7 & Atlético Huila \\ \hline
                     8 &  \\ \hline
                     9 & Deportivo Independiente Medellín \\ \hline
-                    10 & Boyacá Chicó \\ \hline
+                    10 & Deportes Tolima  \\ \hline
                     11 &  \\ \hline
                 \end{tabular} 
                 \caption{Horario de Santa Fe}
@@ -252,8 +252,8 @@
                     \hline
                     Fecha & Equipo\\ \hline
                     1 & Deportivo Independiente Medellín \\ \hline
-                    2 & Boyacá Chicó \\ \hline
-                    3 & Patriotas \\ \hline
+                    2 & Deportes Tolima  \\ \hline
+                    3 & Atlético Huila \\ \hline
                     4 & Deportivo Cali \\ \hline
                     5 & Santa Fe \\ \hline
                     6 & Atlético Nacional \\ \hline
@@ -278,8 +278,8 @@
                     5 & Deportivo Cali \\ \hline
                     6 & Millonarios \\ \hline
                     7 & Junior \\ \hline
-                    8 & Patriotas \\ \hline
-                    9 & Boyacá Chicó\\ \hline
+                    8 & Atlético Huila \\ \hline
+                    9 & Deportes Tolima \\ \hline
                     10 &  \\ \hline
                     11 &  \\ \hline
                 \end{tabular} 
@@ -294,14 +294,14 @@
                     1 & Millonarios \\ \hline
                     2 & Deportivo Cali \\ \hline
                     3 & Atlético Nacional \\ \hline
-                    4 & Boyacá Chicó \\ \hline
+                    4 & Deportes Tolima  \\ \hline
                     5 & América de Cali \\ \hline
                     6 & \textcolor{white}{Deportivo Independiente Medellín} \\ \hline
                     7 &  \\ \hline
                     8 &  \\ \hline
                     9 & Santa Fe\\ \hline
                     10 & Junior \\ \hline
-                    11 & Patriotas \\ \hline
+                    11 & Atlético Huila \\ \hline
                 \end{tabular} 
                 \caption{Horario de Deportivo Independiente Medellín}
             \end{table}
@@ -318,8 +318,8 @@
                     5 & Atlético Nacional \\ \hline
                     6 & Santa Fe \\ \hline
                     7 &  \\ \hline
-                    8 & Boyacá Chicó \\ \hline
-                    9 & Patriotas\\ \hline
+                    8 & Deportes Tolima  \\ \hline
+                    9 & Atlético Huila\\ \hline
                     10 & América de Cali \\ \hline
                     11 &  \\ \hline
                 \end{tabular} 
@@ -336,8 +336,8 @@
                     3 & Santa Fe \\ \hline
                     4 &  \\ \hline
                     5 & Deportivo Independiente Medellín \\ \hline
-                    6 & Patriotas \\ \hline
-                    7 & Boyacá Chicó \\ \hline
+                    6 & Atlético Huila \\ \hline
+                    7 & Deportes Tolima  \\ \hline
                     8 & Millonarios\\ \hline
                     9 & \\ \hline
                     10 & Deportivo Cali \\ \hline
@@ -351,7 +351,7 @@
                 \begin{tabular}{|c||c|}
                     \hline
                     Fecha & Equipo\\ \hline
-                    1 & Patriotas\\ \hline
+                    1 & Atlético Huila\\ \hline
                     2 & Millonarios \\ \hline
                     3 & Junior \\ \hline
                     4 & Deportivo Independiente Medellín \\ \hline
@@ -363,7 +363,7 @@
                     10 & Santa Fe \\ \hline
                     11 &  \\ \hline
                 \end{tabular} 
-                \caption{Horario de Boyacá Chicó}
+                \caption{Horario de Deportes Tolima }
             \end{table}
 
             \begin{table}[H]
@@ -371,7 +371,7 @@
                 \begin{tabular}{|c||c|}
                     \hline
                     Fecha & Equipo\\ \hline
-                    1 & Boyacá Chicó\\ \hline
+                    1 & Deportes Tolima \\ \hline
                     2 & Junior \\ \hline
                     3 & Millonarios \\ \hline
                     4 &  \\ \hline
@@ -383,7 +383,7 @@
                     10 &  \\ \hline
                     11 & Deportivo Independiente Medellín \\ \hline
                 \end{tabular} 
-                \caption{Horario de Patriotas}
+                \caption{Horario de Atlético Huila}
             \end{table}
 
             \begin{table}[H]
@@ -392,8 +392,8 @@
                     \hline
                     Fecha & Equipo\\ \hline
                     1 & Deportivo Cali\\ \hline
-                    2 & Patriotas \\ \hline
-                    3 & Boyacá Chicó \\ \hline
+                    2 & Atlético Huila \\ \hline
+                    3 & Deportes Tolima  \\ \hline
                     4 & Santa Fe \\ \hline
                     5 &  \\ \hline
                     6 &  \\ \hline
@@ -418,7 +418,7 @@
                 esto se puede ver como un aspecto negativo ya que se requiere hacer el torneo con el mínimo número de fechas posibles y sin tantas fechas de descanso.
                 \item Adicionalmente, en un torneo sencillos sin restricciones el mínimo número de \textit{cortes} es \textit{n - 2} si \textit{n} es par y \textit{0} si \textit{n} es impar \cite{de1988some}.  
                 En los resultados obtuvimos que los \textit{cortes} por equipo varian entre 0 y 3, lo que significa que \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de \textit{cortes} por equipo}.
-                Esto obviamente es un aspecto negativo del horario generado debido a que crea una desventaja entre los equipos de la liga.             
+                Esto es un aspecto negativo del horario generado debido a que crea una desventaja entre los equipos de la liga.             
             \end{enumerate}
             
             Esto significa que la implementación de restricciones a un torneo todos contra todos sencillos cambia ciertos aspectos que son considerados importantes tanto a las directivas como a los equipos que forman la liga.
