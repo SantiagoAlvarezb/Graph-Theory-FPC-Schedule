@@ -30,7 +30,7 @@
 
 \begin{document}
     \begin{center}
-        \huge{\textbf{Optimización del torneo colombiano de fútbol mediante el coloreo de grafos}}\\[10pt]
+        \huge{\textbf{Implementación del torneo colombiano de fútbol mediante el coloreo de grafos}}\\[10pt]
         \small{\textbf{Santiago Alvarez Barbosa y Nicolás Velandia Sanabria}}\\[10pt]
         \small{\textbf{Universidad del Rosario, Matemáticas Aplicadas y Ciencias de la Computación}}\\[10pt]
         \today\\
@@ -49,36 +49,36 @@
             La coloración de grafos etiqueta los de vértices o aristas de un grafo G con diferentes colores. 
             Se colorea de tal manera que ningún par de vértices o par de aristas adyacentes tengan el mismo color.\\
             Frecuentemente, la aplicación de coloración de grafos se ve en problemas de horarios colegiales o 
-            universitarios, donde su finalidad es poder crear un horario óptimo donde se cumplen todas las restricciones consideradas. 
+            universitarios, donde su finalidad es poder crear un horario factible donde se cumplen todas las restricciones consideradas. 
             Teniendo esto en cuenta, podemos aplicar las técnicas de coloración de grafos en otros ámbitos similares. 
             Un ejemplo de esto es dentro del ámbito deportivo, específicamente en torneos todos contra todos. La mayoría de las 
             ligas deportivas del mundo se basan en estos torneos, que consisten en \textit{n} equipos, donde se requiere que cada equipo se 
             enfrente a los demás \textit{m} veces dentro de un número específico de rondas. Por lo tanto, podemos aplicar ciertas 
-            restricciones a ligas deportivas actuales, y con el uso de la coloración de grafos, obtener una solución óptima 
+            restricciones a ligas deportivas actuales, y con el uso de la coloración de grafos, obtener una solución factible
             del horario deportivo. 
 
         \section{Problema}
             Nos enfocaremos en el Fútbol Profesional Colombiano (FPC), el cual es un torneo todos contra todos sencillo 
-            (cada equipo juega contra el otro una vez), en la temporada 2021-2. Construiremos el grafo de tal forma que podamos 
-            usar algoritmos para encontrar el número cromático, que en nuestro caso es el número mínimo de rondas que el torneo necesita.
+            (cada equipo juega contra el otro una vez),  y modelaremos un horario factible para la temporada 2021-2. Construiremos el grafo de tal forma que podamos 
+            usar algoritmos para encontrar el número cromático, que en nuestro caso es el número mínimo de fechas que el torneo necesita.
             Adicional al problema de coloreo general, consideraremos ciertas restricciones reales que se pueden incorporar al grafo.\\[10pt]
             Ejemplos de restricciones que podríamos implementar:
 
             \begin{itemize}
                 \item Minimizar el número de \textit{cortes} en el horario, es decir, minimizar el número de veces que un equipo juega local o de visitante consecutivamente.
-                \item Evitar que ciertos partidos se jueguen en la misma fecha debido a que equipos pueden compartir estadio.
+                \item Evitar que ciertos partidos se jueguen en la misma fecha debido a que equipos comparten estadio.
                 \item Equipo que empieza de local debe terminar la temporada como visitante y viceversa.
                 \item Ciertos equipos deben jugar en ciertas rondas. Un ejemplo de porque se aplica esta restricción es para incrementar los ingresos de televisión.
             \end{itemize}
    
             \subsection{Objetivos}
-                Nuestro objetivo general es encontrar un horario válido para la liga profesional colombiana en la temporada 2021-2. Con el uso de la coloración 
+                Nuestro objetivo general es encontrar un horario factible para la Liga Profesional Colombiana en la temporada 2021-2, con el uso de la coloración 
                 de grafos y sus técnicas.\\[10pt]
                 Objetivos específicos:
                 \begin{itemize}
                     \item Encontrar una forma de representar las restricciones especificadas dentro de nuestro grafo. 
-                    \item Encontrar el número cromático de nuestro grafos con el uso de algoritmos de coloración.
-                    \item Encontrar un horario óptimo donde se cumplan las restricciones propuestas.
+                    \item Encontrar el número cromático con el uso de algoritmos de coloración.
+                    \item Encontrar un horario factible donde se cumplan las restricciones propuestas.
                 \end{itemize}
 
         \section{Marco Teórico}
@@ -92,7 +92,7 @@
                 \item \textbf{Número cromático:} El número cromático $\chi(G)$ es el mínimo número de colores necesarios 
                 para etiquetar los vértices de $G$ de tal manera que vértices adyacentes reciben colores 
                 distintos.  
-                \item \textbf{Librerías:} Se usó el lenguaje Python para el desarrollo del proyecto, espesificamente se usaron dos librerias:
+                \item \textbf{Librerías:} Se usó el lenguaje Python para el desarrollo del proyecto, específicamente se usaron dos librerias:
                 \begin{enumerate}
                     \item \textit{NetworkX:} Librería de Python para el estudio de grafos y análisis de redes.
                     \item \textit{Matplotlib:} Librería de Python para la generación de gráficas.
@@ -100,7 +100,7 @@
             \end{itemize}
         
         \section{Modelamiento}
-            Enfocados en el FPC en la temporada 2021-2, aplicaremos ciertas especificaciones para el desarrollo del proyecto. A continuación se presentan dichos aspectos:
+            Enfocados en la temporada 2021-2 del FPC, aplicaremos ciertas especificaciones para el desarrollo del proyecto. A continuación se presentan:
             \begin{itemize}
                 \item  Se usarán \textbf{9 equipos}, cada uno representado por un número:
                 \begin{itemize}[label=$\diamond$]
@@ -125,12 +125,12 @@
             \end{itemize}
 
             Con esto en cuenta podemos implementar un grafo general $G$, el cual se usará para 
-            encontrar el número mínimo de rondas para la realización del torneo.\\
+            encontrar el número mínimo de fechas para la realización del torneo.\\
             Para el grafo $G$, los vértices serán etiquetados con un par ordenado (\textit{a},\text{b}) que indican un 
-            partido entre el equipo \textit{a} y el equipo \textit{b}, con \textit{a} siendo local; mientras que las aristas unen 
+            partido entre el equipo \textit{a} y el equipo \textit{b}, siendo \textit{a} local; mientras que las aristas unen 
             vértices que tienen equipos en común. Al finalizar el procesamiento del grafo $G$, nos enfocaremos en la representación de las restricciones
             sobre el mismo.\\[10pt]
-            Tendremos en cuenta restricciones fuertes, que obligatoriamente se debe cumplir, y restricciones 
+            Tendremos en cuenta restricciones fuertes, que obligatoriamente se deben cumplir, y restricciones 
             suaves, las cuales se cumplirán en lo posible.\\[10pt]
             Condiciones fuertes:
             \begin{itemize}
@@ -144,11 +144,11 @@
 
         \section{Solución Propuesta}
             Agregaremos las restricciones fuertes una por una al grafo $G$ para tener una representación parcial del horario e ir coloreando cada nuevo grafo con el uso de un algoritmo de coloración propio de \textit{Networkx} 
-            para hallar el numero cromático $\chi(G)$. Posteriormente, se implementará la restricción suave para obtener el horario final óptimo factible. 
+            para hallar el número cromático $\chi(G)$. Posteriormente, se implementará la restricción suave para obtener el horario factible final. 
         
         \section{Implementación de la Solución}
             \textbf{Primer paso:}\\ 
-            Se creó el grafo $G$, que representa la liga de fúbol sin ninguna restricción. Como fue mencionado anteriormente, los vértices representan todos los posibles partidos
+            Se creó el grafo $G$, que representa la liga de fútbol sin ninguna restricción. Como fue mencionado anteriormente, los vértices representan todos los posibles partidos
             mientras que las aristas unen aquellos vértices que tienen equipos en común.
             Adicionalmente, se ejecutó la función de coloreo al grafo para tener uno horario de la liga base.
             \begin{figure}[H]
@@ -171,7 +171,7 @@
 
             \textbf{Tercer paso:}\\ 
             Después siguió implementar la segunda restricción fuerte sobre el grafo $G$ obtenido en el paso previo.
-            El proceso fue similar al anterior ya que se identificaron los vértices que contienen los 
+            El proceso fue similar al anterior ya que se identificaron los vértices que contenian los 
             partidos denominados clásicos y después se agregaron aristas entre ellos. En la siguiente figura se aprecia el nuevo grafo $G$ coloreado.
             \begin{figure}[H]
                 \begin{center}
@@ -181,14 +181,14 @@
             \end{figure}
             \textbf{Cuarto paso:}
             Teniendo un horario de la liga donde las dos restricciones fuertes estan activas, el último paso es definir un horario en el cual se minimice los \textit{cortes}.
-            Esto se llevó al cabo escogiendo una fecha base e identificando los equipos que jugaran de local dentro de esta fecha. Con esto en cuenta, comparamos 
+            Esto se llevó al cabo escogiendo una fecha base e identificando los equipos que jugaran de local dentro de esta fecha. Luego, comparamos 
             la base con las demas fechas con el propósito de encontrar una donde los equipos que jugaron de local en la base, jugaran de visitante en la otra.
-            Si este no era el caso, se escogia la fecha en el cual la mayoría de equipos locales en la base jugaran de visitante. Esta metodología se usó hasta completar un horario.   
-            Cabe mencionar que esta metodologia no nos asegura la minimización de cortes para los equipos de forma individual, sino que minimiza los cortes de forma general para el horario. 
+            Si este no era el caso, se escogia la fecha en el cual la mayoría de equipos locales en la base jugaran de visitante.   
+            Cabe mencionar que esta metodología no asegura la minimización de cortes para los equipos de forma individual, sino que minimiza los cortes de forma general para el horario. 
 
         \section{Resultados Obtenidos}
-            Habiendo adquirido las representacion de la Liga Profesional de Fútbol Colombiano con el uso de grafos conteniendo las restricciones fuertes y haciendo el análisis de la 
-            restricción suave para obtener un horario factible y óptimo, se obtuvieron los siguientes resultados.
+            Habiendo adquirido la representación de la Liga Profesional de Fútbol Colombiano con el uso de grafos, conteniendo las restricciones fuertes y haciendo el análisis de la 
+            restricción suave para obtener un horario factible, se obtuvieron los siguientes resultados.
             \begin{itemize}
                 \item Número de fechas: 11
                 \item Partidos por cada equipo: 8
@@ -407,18 +407,18 @@
             \end{table}
                     
             \section{Conclusión}
-            Con la implementación de ciertos conceptos de Teoría de Grafos, restricciones fuertes y restricciones suaves, se logró generar un horario para la Liga Profesional Colombiana de Fútbol para 9 equipos 
-            que es factible y óptimo en el sentido de minimizar el número de \textit{cortes} en el horario.
+            Con la implementación de ciertos conceptos de Teoría de Grafos, restricciones fuertes y suaves, se logró generar un horario para la Liga Profesional Colombiana de Fútbol con 9 equipos especificos
+            que es factible.
             
-            Adicionalmente, se pueden derivar 2 conclusiones claves:
+            Adicionalmente, se pueden derivar 3 conclusiones claves:
             \begin{enumerate}
                 \item En comparación con un torneo todos contra todos sencillo de \textit{n} equipos sin restricciones, el número de fechas para completarlo es \textit{n - 1} si \textit{n} es par y \textit{n} si \textit{n} es impar (donde cada equipo tiene una fecha de descanso).
-                En nuestro caso, sin restricciones necesitariamos \textit{9} fechas, sin embargo, obtuvimos que se necesitan \textit{11} fechas. Es decir \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de fechas en total y número de fechas de descanso por equipo}.
-                Teniendo en cuenta el punto de vista de la Dimayor organización (entidad encargada de administrar y reglamentar los torneos de fútbol profesional en Colombia), 
+                En nuestro caso, sin restricciones necesitariamos \textit{9} fechas, sin embargo, obtuvimos que se necesitan \textit{11} fechas en total. Es decir \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de fechas totales y número de fechas de descanso por equipo}.
+                Teniendo en cuenta el punto de vista de la Dimayor (entidad encargada de administrar y reglamentar los torneos de fútbol profesional en Colombia), 
                 esto se puede ver como un aspecto negativo ya que se requiere hacer el torneo con el mínimo número de fechas posibles y sin tantas fechas de descanso.
                 \item Adicionalmente, en un torneo sencillos sin restricciones el mínimo número de \textit{cortes} es \textit{n - 2} si \textit{n} es par y \textit{0} si \textit{n} es impar \cite{de1988some}.  
                 En los resultados obtuvimos que los \textit{cortes} por equipo varian entre 0 y 3, lo que significa que \textbf{al implementar ciertas restricciones al torneo, se incrementa el número de \textit{cortes} por equipo}.
-                Esto es un aspecto negativo del horario generado debido a que crea una desventaja entre los equipos de la liga.             
+                Esto es un aspecto negativo del horario generado debido a que crea una desventaja entre los equipos de la liga.           
             \end{enumerate}
             
             Esto significa que la implementación de restricciones a un torneo todos contra todos sencillos cambia ciertos aspectos que son considerados importantes tanto a las directivas como a los equipos que forman la liga.
