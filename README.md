@@ -1,5 +1,3 @@
-"# Graph_Theory_Final_Project" 
-
 # Graph Theory Sport Schedule
 
 > Optimal schedule for Colombian Professional Football League3x3 Magic Square Solver 
